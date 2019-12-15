@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"regexp"
 	"time"
 )
 
@@ -268,5 +269,8 @@ const header = `  <A style="text-decoration:none" href="/"><SPAN class="title">c
 <BR><BR>`
 
 func trimCrtShHeader(report []byte) []byte {
-	return bytes.ReplaceAll(report, []byte(header), []byte(""))
+	b := bytes.ReplaceAll(report, []byte(header), []byte(""))
+	return nope.ReplaceAll(b, []byte(""))
 }
+
+var nope = regexp.MustCompile(`(?s)<HEAD>.*</HEAD>`)
