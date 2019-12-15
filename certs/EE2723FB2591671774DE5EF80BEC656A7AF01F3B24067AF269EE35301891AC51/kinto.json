@@ -1,0 +1,15 @@
+{
+  "schema": 1544194312520,
+  "details": {
+    "bug": "https://bugzilla.mozilla.org/show_bug.cgi?id=1512640",
+    "who": "",
+    "why": "",
+    "name": "",
+    "created": "2018-12-07T09:51:34Z"
+  },
+  "enabled": true,
+  "issuerName": "MIGnMQswCQYDVQQGEwJIVTERMA8GA1UEBwwIQnVkYXBlc3QxFTATBgNVBAoMDE5ldExvY2sgS2Z0LjE3MDUGA1UECwwuVGFuw7pzw610dsOhbnlraWFkw7NrIChDZXJ0aWZpY2F0aW9uIFNlcnZpY2VzKTE1MDMGA1UEAwwsTmV0TG9jayBBcmFueSAoQ2xhc3MgR29sZCkgRsWRdGFuw7pzw610dsOhbnk=",
+  "serialNumber": "SUEs5AAf",
+  "id": "ab409612-f7ba-430b-bd06-59fdb9a9313b",
+  "lastModified": 0
+}

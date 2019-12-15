@@ -1,0 +1,15 @@
+{
+  "schema": 1557911212456,
+  "details": {
+    "bug": "",
+    "who": "",
+    "why": "",
+    "name": "",
+    "created": ""
+  },
+  "enabled": true,
+  "issuerName": "MIGCMQswCQYDVQQGEwJERTErMCkGA1UECgwiVC1TeXN0ZW1zIEVudGVycHJpc2UgU2VydmljZXMgR21iSDEfMB0GA1UECwwWVC1TeXN0ZW1zIFRydXN0IENlbnRlcjElMCMGA1UEAwwcVC1UZWxlU2VjIEdsb2JhbFJvb3QgQ2xhc3MgMg==",
+  "serialNumber": "Y13XZEprZXM=",
+  "id": "5774207d-0be6-47c1-8387-298765987c16",
+  "lastModified": 0
+}

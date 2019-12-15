@@ -1,0 +1,15 @@
+{
+  "schema": 1570131733835,
+  "details": {
+    "bug": "",
+    "who": "",
+    "why": "",
+    "name": "",
+    "created": ""
+  },
+  "enabled": true,
+  "issuerName": "MIGnMQswCQYDVQQGEwJIVTERMA8GA1UEBwwIQnVkYXBlc3QxFTATBgNVBAoMDE5ldExvY2sgS2Z0LjE3MDUGA1UECwwuVGFuw7pzw610dsOhbnlraWFkw7NrIChDZXJ0aWZpY2F0aW9uIFNlcnZpY2VzKTE1MDMGA1UEAwwsTmV0TG9jayBBcmFueSAoQ2xhc3MgR29sZCkgRsWRdGFuw7pzw610dsOhbnk=",
+  "serialNumber": "SUEs5ABThOepKci5Vzg=",
+  "id": "040501f8-3330-4cf6-81f9-f8718593309b",
+  "lastModified": 0
+}

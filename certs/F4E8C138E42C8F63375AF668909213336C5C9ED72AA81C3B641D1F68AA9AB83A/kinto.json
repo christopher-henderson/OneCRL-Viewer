@@ -1,0 +1,15 @@
+{
+  "schema": 1547837138104,
+  "details": {
+    "bug": "https://bugzilla.mozilla.org/show_bug.cgi?id=1521150",
+    "who": "",
+    "why": "",
+    "name": "",
+    "created": "2019-01-18T11:45:13Z"
+  },
+  "enabled": true,
+  "issuerName": "MIGUMQswCQYDVQQGEwJVUzEdMBsGA1UEChMUU3ltYW50ZWMgQ29ycG9yYXRpb24xHzAdBgNVBAsTFlN5bWFudGVjIFRydXN0IE5ldHdvcmsxRTBDBgNVBAMTPFN5bWFudGVjIENsYXNzIDIgUHVibGljIFByaW1hcnkgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkgLSBHNg==",
+  "serialNumber": "PLutAhi0cRaKAH2YfGu0ww==",
+  "id": "33baf681-54e2-4e2c-a122-c4cd476df1ad",
+  "lastModified": 0
+}

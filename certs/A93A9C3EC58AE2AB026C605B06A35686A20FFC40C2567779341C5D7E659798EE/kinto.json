@@ -1,0 +1,15 @@
+{
+  "schema": 1534541088713,
+  "details": {
+    "bug": "https://bugzilla.mozilla.org/show_bug.cgi?id=1484351",
+    "who": "",
+    "why": "",
+    "name": "",
+    "created": "2018-08-17T22:24:14Z"
+  },
+  "enabled": true,
+  "issuerName": "MFwxCzAJBgNVBAYTAlVTMRkwFwYDVQQKDBBWZXJpem9uIEJ1c2luZXNzMREwDwYDVQQLDAhPbW5pUm9vdDEfMB0GA1UEAwwWVmVyaXpvbiBHbG9iYWwgUm9vdCBDQQ==",
+  "serialNumber": "Beo=",
+  "id": "9ff5d4c3-8d66-48ff-9add-343a90b031a6",
+  "lastModified": 0
+}

@@ -1,0 +1,15 @@
+{
+  "schema": 1544194310013,
+  "details": {
+    "bug": "https://bugzilla.mozilla.org/show_bug.cgi?id=1512640",
+    "who": "",
+    "why": "",
+    "name": "",
+    "created": "2018-12-07T09:51:34Z"
+  },
+  "enabled": true,
+  "issuerName": "MD0xCzAJBgNVBAYTAkZSMREwDwYDVQQKEwhDZXJ0cGx1czEbMBkGA1UEAxMSQ2xhc3MgMiBQcmltYXJ5IENB",
+  "serialNumber": "ESImf/mZpsO94hCWJFJDUDPZ",
+  "id": "132dad17-7ebb-482a-bc8a-8b1ab06b6132",
+  "lastModified": 0
+}

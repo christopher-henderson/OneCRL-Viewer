@@ -1,0 +1,15 @@
+{
+  "schema": 1570131733835,
+  "details": {
+    "bug": "",
+    "who": "",
+    "why": "",
+    "name": "",
+    "created": ""
+  },
+  "enabled": true,
+  "issuerName": "MIGnMQswCQYDVQQGEwJIVTERMA8GA1UEBwwIQnVkYXBlc3QxFTATBgNVBAoMDE5ldExvY2sgS2Z0LjE3MDUGA1UECwwuVGFuw7pzw610dsOhbnlraWFkw7NrIChDZXJ0aWZpY2F0aW9uIFNlcnZpY2VzKTE1MDMGA1UEAwwsTmV0TG9jayBBcmFueSAoQ2xhc3MgR29sZCkgRsWRdGFuw7pzw610dsOhbnk=",
+  "serialNumber": "SUEs5ABI",
+  "id": "64f0a9c6-671c-459b-a43e-91ddd5fb76a5",
+  "lastModified": 0
+}
