@@ -19,22 +19,32 @@ func newRequest() *http.Request {
 }
 
 func comp(a, b pkix.RDNSequence) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	needed := len(a)
-	matched := 0
+	aSet := make(pkix.RelativeDistinguishedNameSET, 0)
+	bSet := make(pkix.RelativeDistinguishedNameSET, 0)
 	for _, i := range a {
-		for _, j := range b {
-			if compset(i, j) {
-				matched += 1
-				goto CONTINUE
-			}
+		for _, j := range i {
+			aSet = append(aSet, j)
 		}
-		return false
-	CONTINUE:
 	}
-	return matched == needed
+	for _, i := range b {
+		for _, j := range i {
+			bSet = append(bSet, j)
+		}
+	}
+	return compset(aSet, bSet)
+	//needed := len(a)
+	//matched := 0
+	//for _, i := range a {
+	//	for _, j := range b {
+	//		if compset(i, j) {
+	//			matched += 1
+	//			goto CONTINUE
+	//		}
+	//	}
+	//	return false
+	//CONTINUE:
+	//}
+	//return matched == needed
 }
 
 func compset(a, b pkix.RelativeDistinguishedNameSET) bool {
@@ -42,21 +52,21 @@ func compset(a, b pkix.RelativeDistinguishedNameSET) bool {
 		return false
 	}
 	sort.Slice(a, func(i, j int) bool {
-		if len(a[i].Type) < len(b[j].Type) {
+		if len(a[i].Type) < len(a[j].Type) {
 			return true
 		}
 		for index, value := range a[i].Type {
-			if value < b[j].Type[index] {
+			if value < a[j].Type[index] {
 				return true
 			}
 		}
 		return false
 	})
 	sort.Slice(b, func(i, j int) bool {
-		if len(a[i].Type) < len(b[j].Type) {
+		if len(b[i].Type) < len(b[j].Type) {
 			return true
 		}
-		for index, value := range a[i].Type {
+		for index, value := range b[i].Type {
 			if value < b[j].Type[index] {
 				return true
 			}
