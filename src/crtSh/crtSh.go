@@ -8,6 +8,7 @@ import (
 	"github.com/christopher-henderson/OneCRL-Viewer/kinto"
 	_ "github.com/lib/pq"
 	"log"
+	"reflect"
 	"strings"
 )
 
@@ -60,26 +61,73 @@ func GetCerts(serials []string) (map[string][]*x509.Certificate, error) {
 			certs[serial] = []*x509.Certificate{cert}
 		}
 	}
+
+	ccadbCerts, err := Retrieve()
+	if err != nil {
+		log.Println(err)
+	} else {
+		for serial, cert := range ccadbCerts {
+			if c, ok := certs[serial]; ok {
+				for _, i := range certs[serial] {
+					if reflect.DeepEqual(i, cert) {
+						continue
+					}
+				}
+				certs[serial] = append(c, cert)
+				log.Println("NEW!")
+			} else {
+				log.Println("NEW!")
+				certs[serial] = []*x509.Certificate{cert}
+			}
+		}
+	}
 	return certs, nil
 }
 
 func BuildQuery(serials []string) (string, []interface{}) {
 	set := strings.Builder{}
 	set.WriteString(`select certificate from certificate c where x509_serialNumber(c.certificate) in (`)
-	// You can just convert a []string to a []interface{}, so while we're looping
+	// You can't just convert a []string to a []interface{}, so while we're looping
 	// over these we may as well allocate a new buffer to return for use as the argument
 	// variadic in a query.
-	args := make([]interface{}, len(serials))
-	for i := 0; i < len(serials); i++ {
-		args[i] = serials[i]
+	args := make([]interface{}, 0)
+	i := 0
+	for index, serial := range serials {
+		args = append(args, serial)
 		set.WriteString(fmt.Sprintf("decode($%d, 'hex')", i+1))
-		if i != len(serials)-1 {
+		if !strings.HasPrefix(serial, "00") {
+			i += 1
+			padded := fmt.Sprintf("00%s", serial)
+			args = append(args, padded)
+			set.WriteByte(',')
+			set.WriteString(fmt.Sprintf("decode($%d, 'hex')", i+1))
+		}
+		i += 1
+		if index != len(serials)-1 {
 			set.WriteByte(',')
 		}
 	}
 	set.WriteByte(')')
 	return set.String(), args
 }
+
+//func BuildQuery(serials []string) (string, []interface{}) {
+//	set := strings.Builder{}
+//	set.WriteString(`select certificate from certificate c where x509_serialNumber(c.certificate) in (`)
+//	// You can just convert a []string to a []interface{}, so while we're looping
+//	// over these we may as well allocate a new buffer to return for use as the argument
+//	// variadic in a query.
+//	args := make([]interface{}, len(serials))
+//	for i := 0; i < len(serials); i++ {
+//		args[i] = serials[i]
+//		set.WriteString(fmt.Sprintf("decode($%d, 'hex')", i+1))
+//		if i != len(serials)-1 {
+//			set.WriteByte(',')
+//		}
+//	}
+//	set.WriteByte(')')
+//	return set.String(), args
+//}
 
 //SELECT c.ISSUER_CA_ID,
 //        NULL::text ISSUER_NAME,

@@ -55,6 +55,9 @@ func Retrieve() (map[string]*x509.Certificate, error) {
 	}
 	for _, cert := range e {
 		b, _ := pem.Decode([]byte(cert.PEM))
+		if b == nil {
+			continue
+		}
 		c, err := x509.ParseCertificate(b.Bytes)
 		if err != nil {
 			log.Println(err)

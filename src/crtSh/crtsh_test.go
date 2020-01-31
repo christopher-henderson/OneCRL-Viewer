@@ -1,6 +1,7 @@
 package crtSh
 
 import (
+	"bufio"
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"database/sql"
@@ -8,6 +9,7 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	"fmt"
+	"io/ioutil"
 	"reflect"
 	"regexp"
 	"sort"
@@ -23,6 +25,96 @@ const b = "SUEs5ABThOepKci5Vzg="
 //        x509_serialNumber(c.CERTIFICATE) = decode($1, 'hex')
 //    GROUP BY c.ID, c.ISSUER_CA_ID, ISSUER_NAME, NAME_VALUE
 //    ORDER BY MIN_ENTRY_TIMESTAMP DESC, NAME_VALUE, ISSUER_NAME
+
+func TestWhy(t *testing.T) {
+	us := toSet(getUnknownUs())
+	them := toSet(getUnknownThem())
+	inUsNotThem := diff(us, them)
+	inThemNotUs := diff(them, us)
+	t.Log(len(us))
+	t.Log(len(them))
+	t.Log(inUsNotThem)
+	t.Log(len(inUsNotThem))
+	t.Log(inThemNotUs)
+	t.Log(len(inThemNotUs))
+}
+
+func diff(a, b map[string]bool) []string {
+	r := make([]string, 0)
+	for k, _ := range a {
+		if ok := b[k]; !ok {
+			r = append(r, k)
+		}
+	}
+	return r
+}
+
+func toSet(list []string) map[string]bool {
+	m := make(map[string]bool)
+	for _, l := range list {
+		m[l] = true
+	}
+	return m
+}
+
+const certs = `H:\TestRepo\certs`
+
+func getUnknownUs() []string {
+	dirs, err := ioutil.ReadDir(certs)
+	if err != nil {
+		panic(err)
+	}
+	unknown := make([]string, 0)
+	for _, d := range dirs {
+		if strings.HasPrefix(d.Name(), "Serial_") {
+			unknown = append(unknown, strings.TrimPrefix(d.Name(), "Serial_"))
+		}
+	}
+	return unknown
+}
+
+const crtsh = `H:\OneCRL-Viewer\onecrl.html`
+func getUnknownThem() []string {
+		b, err := ioutil.ReadFile(crtsh)
+	if err != nil {
+		panic(err)
+	}
+	s := string(b)
+	r := bufio.NewReader(strings.NewReader(s))
+	unknown := make([]string, 0)
+	known := make([]string, 0)
+	for line, err := r.ReadString('\n'); err == nil; line, err = r.ReadString('\n') {
+		if strings.TrimSpace(line) != "<TR>" {
+			continue
+		}
+		line, err = r.ReadString('\n')
+		if err != nil {
+			continue
+		}
+		has := false
+		if strings.TrimSpace(line) != "<TD>&nbsp;</TD>" {
+			has = true
+		}
+		for i := 0; i < 4; i++ {
+			_, err = r.ReadString('\n')
+			if err != nil {
+				continue
+			}
+		}
+		line, err = r.ReadString('\n')
+		if err != nil {
+			continue
+		}
+		serial := strings.ToUpper(regexp.MustCompile(`(<T(D|H)>|</T(D|H)>)`).ReplaceAllString(strings.TrimSpace(line), ""))
+		//serial := strings.ReplaceAll(strings.ReplaceAll(strings.TrimSpace(line), "<TD>", ""), "</TD>", "")
+		if !has {
+			unknown = append(unknown, serial)
+		} else {
+			known = append(known, serial)
+		}
+	}
+	return unknown
+}
 
 func TestGetCert(t *testing.T) {
 	db, err := sql.Open("postgres", connectionString)
