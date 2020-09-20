@@ -53,6 +53,9 @@ func (k *KintoEntry) ReadableIssuer() string {
 	if err != nil {
 		panic(err)
 	}
+	if string(i) == "" {
+		return ""
+	}
 	var name pkix.RDNSequence
 	_, err = asn1.Unmarshal(i, &name)
 	if err != nil {

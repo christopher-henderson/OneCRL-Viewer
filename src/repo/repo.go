@@ -10,6 +10,7 @@ import (
 	"github.com/christopher-henderson/OneCRL-Viewer/kinto"
 	"github.com/christopher-henderson/OneCRL-Viewer/markdown"
 	"io/ioutil"
+	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -218,12 +219,21 @@ func (c *CanonicalEntry) Location() string {
 	return fmt.Sprintf(path.Join(CertificateDirectory, c.Dirname))
 }
 
+var remoteFailedAlready = false
+
 func (c *CanonicalEntry) FrontPageRow(commit string) []markdown.Renderer {
 	repo, err := git.NewRepo(Repo).Remote()
+	link := ""
 	if err != nil {
-		panic(err) // @TODO be given the repo
+		if remoteFailedAlready {
+			/// Just to not be noisy. If this happens once it will happen a bunch.
+		} else {
+			remoteFailedAlready = true
+			log.Println("Failed to get git remote information. This is not fatal, however hyperlinks will be broken in the README.md")
+		}
+	} else {
+		link = fmt.Sprintf("%s/tree/%s/certs/%s", repo, commit, c.Dirname)
 	}
-	link := fmt.Sprintf("%s/tree/%s/certs/%s", repo, commit, c.Dirname)
 	return []markdown.Renderer{
 		&markdown.Text{c.KintoEntry.ReadableIssuer()},
 		&markdown.Text{c.KintoEntry.HexSerial()},
